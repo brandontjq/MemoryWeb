@@ -130,6 +130,14 @@
     </head>
 
     <body onLoad="start()">
+        <script>
+            //This script is for the suggestion of address in the location form field.
+            function init(){
+                var input = document.getElementById('location');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+            }   
+            //google.maps.event.addDomListener(window, 'load', init);    
+        </script>
         <%
             String event_id_str = request.getParameter("event_id");
             double event_id_double = 0;
@@ -329,14 +337,7 @@
             <!-- /.container -->
         </footer>
 
-        <script>
-            //This script is for the suggestion of address in the location form field.
-            function init(){
-                var input = document.getElementById('location');
-                var autocomplete = new google.maps.places.Autocomplete(input);
-            }   
-            //google.maps.event.addDomListener(window, 'load', init);    
-        </script>
+        
         
     </body>
 
