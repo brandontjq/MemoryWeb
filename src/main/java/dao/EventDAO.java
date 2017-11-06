@@ -29,7 +29,7 @@ public class EventDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String query = "INSERT INTO " + TBLNAME + " (event_id, patient_id, event_name,event_description,event_location,event_start_time, event_end_time,completed) VALUES (?,?,?,?,?,?,?,?);";
+            String query = "INSERT INTO " + TBLNAME + " (event_id, patient_id, event_name,event_description,event_location, event_lat, event_lng, event_start_time, event_end_time,completed) VALUES (?,?,?,?,?,?,?,?,?,?);";
 
             stmt = conn.prepareStatement(query);
 
@@ -38,9 +38,11 @@ public class EventDAO {
             stmt.setString(3, event.getEvent_name());
             stmt.setString(4, event.getEvent_description());
             stmt.setString(5, event.getLocation());
-            stmt.setTimestamp(6, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
-            stmt.setTimestamp(7, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
-            stmt.setBoolean(8, false);
+            stmt.setDouble(6, event.getEvent_lat());
+            stmt.setDouble(7, event.getEvent_lng());
+            stmt.setTimestamp(8, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
+            stmt.setTimestamp(9, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
+            stmt.setBoolean(10, false);
 
             stmt.executeUpdate();
             //conn.commit();
@@ -58,7 +60,7 @@ public class EventDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String query = "UPDATE " + TBLNAME + " SET patient_id = ?, event_name = ?,event_description =?,event_location = ?,event_start_time = ?, event_end_time = ?, completed = ? WHERE event_id = ?;";
+            String query = "UPDATE " + TBLNAME + " SET patient_id = ?, event_name = ?,event_description =?,event_location = ?, event_lat = ?, event_lng = ?, event_start_time = ?, event_end_time = ?, completed = ? WHERE event_id = ?;";
 
             stmt = conn.prepareStatement(query);
 
@@ -67,10 +69,12 @@ public class EventDAO {
             stmt.setString(2, event.getEvent_name());
             stmt.setString(3, event.getEvent_description());
             stmt.setString(4, event.getLocation());
-            stmt.setTimestamp(5, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
-            stmt.setTimestamp(6, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
-            stmt.setBoolean(7, false);
-            stmt.setInt(8, event.getEvent_id());
+            stmt.setDouble(5, event.getEvent_lat());
+            stmt.setDouble(6, event.getEvent_lng());
+            stmt.setTimestamp(7, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
+            stmt.setTimestamp(8, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
+            stmt.setBoolean(9, false);
+            stmt.setInt(10, event.getEvent_id());
             stmt.executeUpdate();
             //conn.commit();
         } catch (Exception e) {

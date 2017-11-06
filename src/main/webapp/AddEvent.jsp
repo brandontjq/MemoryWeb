@@ -146,6 +146,13 @@
                 event_id_double = Double.parseDouble(event_id_str);
                 event_id = (int) event_id_double;
             }
+            String patient_id_str = request.getParameter("patient_id");
+            double patient_id_double = 0;
+            int patient_id = 0;
+            if (patient_id_str != null) {
+                patient_id_double = Double.parseDouble(patient_id_str);
+                patient_id = (int) patient_id_double;
+            }
         %>
         <!-- NAVBAR-->
         <nav class="navbar navbar-custom">
@@ -234,6 +241,7 @@
                             <div class="form-group">
                                 <div class="col-sm-10">
                                     <input type="hidden" name="event_id" id="event_id" value="<%out.println(event_id);%>">
+                                    <input type="hidden" name="patient_id" id="patient_id" value="<%out.println(patient_id);%>">
                                 </div>
                             </div>    
                             <div class="form-group"> 

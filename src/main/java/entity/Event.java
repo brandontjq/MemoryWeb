@@ -18,17 +18,21 @@ public class Event {
     private String event_description;
     private int location_id;
     private String location;
+    private double event_lat;
+    private double event_lng;
     private DateTime event_start_time;
     private DateTime event_end_time;
     private boolean completed;
     
-    public Event(int event_id, int patient_id, String event_name, String event_description, String location,
+    public Event(int event_id, int patient_id, String event_name, String event_description, String location, double event_lat, double event_lng,
             DateTime event_start_time, DateTime event_end_time){
         this.event_id = event_id;
         this.patient_id = patient_id;
         this.event_name = event_name;
         this.event_description = event_description;
         this.location = location;
+        this.event_lat = event_lat;
+        this.event_lng = event_lng;
         this.event_start_time = event_start_time;
         this.event_end_time = event_end_time;
         this.completed = false;
@@ -44,6 +48,13 @@ public class Event {
         this.event_start_time = event_start_time;
         this.event_end_time = event_end_time;
         this.completed = completed;
+    }
+    
+    public double getEvent_lat(){
+        return event_lat;
+    }
+    public double getEvent_lng(){
+        return event_lng;
     }
     /**
      * @return the event_id

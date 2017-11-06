@@ -101,8 +101,13 @@
             <!-- Project One -->
             <div class="col-md-5">
 <!--            <div class="row">-->
+                <form action="AddEvent.jsp" method="POST">
+                    <input type="hidden" name="patient_id" id="patient_id" value="<%out.println(patient_id);%>">
+                    <button type="submit" class="btn btn-primary pull-left">Add an Event</button>
+                </form><br/><br/>
                 <table class="table table-hover">
-                <a href="AddEvent.jsp" class="btn btn-primary pull-left">Add an Event</a><br/><br/>
+<!--                <a href="AddEvent.jsp" class="btn btn-primary pull-left">Add an Event</a><br/><br/>-->
+                
                 <%
                     EventDAO eventDAO = new EventDAO();
                     ArrayList<Event> events = eventDAO.getAllEvents(patient_id);
@@ -122,6 +127,7 @@
                             <p><%out.println("<i>"+event.getLocation()+ "</i>");%></p>
                             <form action="ModifyEvent.jsp" method="POST">
                                 <input type="hidden" name="event_id" id="event_id" value="<%out.println(event_id);%>">
+                                <input type="hidden" name="patient_id" id="patient_id" value="<%out.println(patient_id);%>">
     <!--                            <a class="btn btn-primary" href="ModifyEvent.jsp">Modify</a>-->
                                 <button type="submit" class="btn btn-default pull-left">Modify</button>
                             </form>
