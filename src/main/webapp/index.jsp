@@ -34,7 +34,13 @@
         <!--         Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="css/memorywebcss.css" rel="stylesheet">
-
+        <%
+            String patient_id_str = request.getParameter("patient_id");
+            int patient_id = (int)Double.parseDouble(patient_id_str);
+            PatientDAO patientDAO = new PatientDAO();
+            Patient patient = patientDAO.getPatient(patient_id);
+            
+        %>
         <script>
             function startTime() {
                 var today = new Date();
@@ -68,7 +74,54 @@
                 startTime();
                 getFormattedDate();
             }
+var request;
+var latitude;
+var longitude;
+function sendInfo()  
+{  
+var v=document.vinform.t1.value;
+var url="processGetPatientLocation.jsp?val="+v;  
+  
+if(window.XMLHttpRequest){  
+request=new XMLHttpRequest();  
+}  
+else if(window.ActiveXObject){  
+request=new ActiveXObject("Microsoft.XMLHTTP");  
+}  
+  
+try{  
+request.onreadystatechange=getInfo;  
+request.open("GET",url,true);  
+request.send();  
+}catch(e){alert("Unable to connect to server");}  
+}  
+  
+function getInfo(){  
+if(request.readyState===4){  
+var val=request.responseText;
+//alert(val);
+latitude = val.substring(0,val.indexOf(","));
+longtitude = val.substring(val.indexOf(",")+1);
+//document.getElementById('amit').innerHTML=latitude+" " + longtitude;
+//document.getElementById('brandon').innerHTML=latitude+" " + longtitude;
 
+myMap(latitude,longtitude);
+}  
+}
+function myMap(latitude,longtitude) {
+                                    var latAndLng = {lat: parseFloat(latitude), lng: parseFloat(longtitude)};
+                                    var mapOptions = {
+                                        center: latAndLng,
+                                        zoom: 18,
+                                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                                    }
+                                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                                    var marker = new google.maps.Marker({
+                                        position: latAndLng,
+                                        map: map
+                                    });
+                                }
+setInterval(sendInfo, 2000);
         </script>
     </head>
 
@@ -84,14 +137,11 @@
                       <li><a href="#"><img src="img/memorywatchlogo.jpg" width="150" height="60"></a></li>
                 </ul>-->
             </div>
-        </nav>
-        <%
-            String patient_id_str = request.getParameter("patient_id");
-            int patient_id = (int)Double.parseDouble(patient_id_str);
-            PatientDAO patientDAO = new PatientDAO();
-            Patient patient = patientDAO.getPatient(patient_id);
-            
-        %>
+        </nav>  
+        
+        <form name="vinform">  
+            <input type="hidden" name="t1" value="<%out.println(patient_id);%>">
+        </form>
         <!-- Page Content -->
         <div class="container">
 
@@ -154,19 +204,19 @@
                             <!--Google Maps Plugin -->
                             <!--TO DO: dynamically update user location on google maps -->
                             <script>
-                                function myMap() {
-                                    var latAndLng = {lat: 1.2973589, lng: 103.8495542};
-                                    var mapOptions = {
-                                        center: latAndLng,
-                                        zoom: 18,
-                                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                                    }
-                                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                                    var marker = new google.maps.Marker({
-                                        position: latAndLng,
-                                        map: map
-                                    });
-                                }
+//                                function myMap() {
+//                                    var latAndLng = {lat: 1.2973589, lng: 103.8495542};
+//                                    var mapOptions = {
+//                                        center: latAndLng,
+//                                        zoom: 18,
+//                                        mapTypeId: google.maps.MapTypeId.ROADMAP
+//                                    }
+//                                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+//                                    var marker = new google.maps.Marker({
+//                                        position: latAndLng,
+//                                        map: map
+//                                    });
+//                                }
                             </script>
 
                             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI6Iec_nY-mLau6ibtA3FhKAa5B3nP2aA&callback=myMap"></script>

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -120,6 +122,35 @@ public class LocationDAO {
             ConnectionManager.close(stmt);
         }
     }
+    
+    public String getUserLocation(int patient_id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        String result = "";
 
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "SELECT * from patient_location WHERE patient_id = ? order by patient_timestamp desc limit 1";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, patient_id);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                
+                double patient_lat = rs.getDouble("patient_lat");
+                double patient_lng = rs.getDouble("patient_lng");
+                result += patient_lat + "," + patient_lng;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+
+        }
+        return result;
+    }
 
 }
