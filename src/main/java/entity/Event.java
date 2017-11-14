@@ -50,6 +50,21 @@ public class Event {
         this.completed = completed;
     }
     
+    public Event(int event_id, int patient_id, String event_name, String event_description, String location,double event_lat, double event_lng,
+            DateTime event_start_time, DateTime event_end_time, boolean completed){
+        
+        this.event_id = event_id;
+        this.patient_id = patient_id;
+        this.event_name = event_name;
+        this.event_description = event_description;
+        this.location = location;
+        this.event_lat = event_lat;
+        this.event_lng = event_lng;
+        this.event_start_time = event_start_time;
+        this.event_end_time = event_end_time;
+        this.completed = completed;
+    }
+    
     public double getEvent_lat(){
         return event_lat;
     }

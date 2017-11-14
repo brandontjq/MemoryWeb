@@ -166,10 +166,12 @@ public class EventDAO {
                 String event_name = rs.getString("event_name");
                 String event_description = rs.getString("event_description");
                 String event_location = rs.getString("event_location");
+                double event_lat = rs.getDouble("event_lat");
+                double event_lng = rs.getInt("event_lng");
                 DateTime event_start_time = new DateTime(rs.getTimestamp("event_start_time").getTime());
                 DateTime event_end_time = new DateTime(rs.getTimestamp("event_end_time").getTime());
                 boolean completed = rs.getBoolean("completed");
-                event = new Event(event_id, patient_id, event_name, event_description, event_location, event_start_time,
+                event = new Event(event_id, patient_id, event_name, event_description, event_location, event_lat, event_lng, event_start_time,
                                                 event_end_time, completed);
             }
 
