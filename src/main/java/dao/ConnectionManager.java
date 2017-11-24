@@ -16,8 +16,7 @@ import java.util.logging.Logger;
  * method that close connections, statements and resultsets
  */
 public class ConnectionManager {
-
-  //private static final String PROPS_FILENAME = "/memoryweb/connection.properties";
+    
   private static String dbUser = "root";
   private static String dbPassword = "";
   private static String dbURL = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "memoryweb"  + "?useUnicode=yes&characterEncoding=UTF-8";;

@@ -1,3 +1,15 @@
+
+<%@page import="org.quartz.TriggerKey"%>
+<%@page import="org.quartz.JobKey"%>
+<%@page import="org.quartz.JobKey.*"%>
+<%@page import="org.quartz.impl.StdSchedulerFactory"%>
+<%@page import="static org.quartz.SimpleScheduleBuilder.*"%>
+<%@page import="org.quartz.TriggerBuilder"%>
+<%@page import="org.quartz.JobDetail"%>
+<%@page import="org.quartz.JobBuilder"%>
+<%@page import="org.quartz.Trigger"%>
+<%@page import="job.SMSReminder"%>
+<%@page import="org.quartz.Scheduler"%>
 <%@page import="entity.Patient"%>
 <%@page import="dao.PatientDAO"%>
 <%@page import="org.joda.time.DateTime"%>
@@ -129,7 +141,15 @@
                         
                     <%
                     }
-            
+                    //Quartz Scheduler
+//                    Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+//                    //scheduler.clear();
+//                    //JobDetail jd = JobBuilder.newJob(SMSReminder.class).withIdentity("SMSJob", "group1").build();
+//                    JobDetail jd = JobBuilder.newJob(SMSReminder.class).build();
+//                    //Trigger trigger = TriggerBuilder.newTrigger().withIdentity("SMSTrigger", "group1").startNow().withSchedule(simpleSchedule().withIntervalInSeconds(60).repeatForever()).build();
+//                    Trigger trigger = TriggerBuilder.newTrigger().startNow().withSchedule(simpleSchedule().withIntervalInSeconds(60).repeatForever()).build();
+//                    scheduler.scheduleJob(jd, trigger);
+                   
                     
                 %>
                 </table>

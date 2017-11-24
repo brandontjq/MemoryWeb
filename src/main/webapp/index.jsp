@@ -125,7 +125,7 @@
                 });
             }
             //Query DB every N seconds
-            //setInterval(sendInfo, 2000);
+            setInterval(sendInfo, 2000);
         </script>
     </head>
 

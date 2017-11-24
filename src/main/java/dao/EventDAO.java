@@ -29,7 +29,7 @@ public class EventDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String query = "INSERT INTO " + TBLNAME + " (event_id, patient_id, event_name,event_description,event_location, event_lat, event_lng, event_start_time, event_end_time,completed) VALUES (?,?,?,?,?,?,?,?,?,?);";
+            String query = "INSERT INTO " + TBLNAME + " (event_id, patient_id, event_name,event_description,event_location, event_lat, event_lng, event_start_time, event_end_time,completed,reminded) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 
             stmt = conn.prepareStatement(query);
 
@@ -43,6 +43,7 @@ public class EventDAO {
             stmt.setTimestamp(8, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
             stmt.setTimestamp(9, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
             stmt.setBoolean(10, false);
+            stmt.setBoolean(11, false);
 
             stmt.executeUpdate();
             //conn.commit();
@@ -60,7 +61,7 @@ public class EventDAO {
         try {
             conn = ConnectionManager.getConnection();
 
-            String query = "UPDATE " + TBLNAME + " SET patient_id = ?, event_name = ?,event_description =?,event_location = ?, event_lat = ?, event_lng = ?, event_start_time = ?, event_end_time = ?, completed = ? WHERE event_id = ?;";
+            String query = "UPDATE " + TBLNAME + " SET patient_id = ?, event_name = ?,event_description =?,event_location = ?, event_lat = ?, event_lng = ?, event_start_time = ?, event_end_time = ?, completed = ?, reminded = ? WHERE event_id = ?;";
 
             stmt = conn.prepareStatement(query);
 
@@ -74,9 +75,9 @@ public class EventDAO {
             stmt.setTimestamp(7, new java.sql.Timestamp(event.getEvent_start_time().getMillis()));
             stmt.setTimestamp(8, new java.sql.Timestamp(event.getEvent_end_time().getMillis()));
             stmt.setBoolean(9, false);
-            stmt.setInt(10, event.getEvent_id());
+            stmt.setBoolean(10, false);
+            stmt.setInt(11, event.getEvent_id());
             stmt.executeUpdate();
-            //conn.commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -107,8 +108,45 @@ public class EventDAO {
                 DateTime event_start_time = new DateTime(rs.getTimestamp("event_start_time").getTime());
                 DateTime event_end_time = new DateTime(rs.getTimestamp("event_end_time").getTime());
                 boolean completed = rs.getBoolean("completed");
+                boolean reminded = rs.getBoolean("reminded");
                 Event eventTemp = new Event(event_id, patient_id, event_name, event_description, event_location, event_start_time,
-                                                event_end_time, completed);
+                                                event_end_time, completed, reminded);
+                events.add(eventTemp);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return events;
+    }
+    
+    public ArrayList<Event> getAllEvents(){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        ArrayList<Event> events = new ArrayList<Event>();
+
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "SELECT * FROM event ORDER BY event_start_time asc;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                int event_id = rs.getInt("event_id");
+                int patientid = rs.getInt("patient_id");
+                String event_name = rs.getString("event_name");
+                String event_description = rs.getString("event_description");
+                String event_location = rs.getString("event_location");
+                DateTime event_start_time = new DateTime(rs.getTimestamp("event_start_time").getTime());
+                DateTime event_end_time = new DateTime(rs.getTimestamp("event_end_time").getTime());
+                boolean completed = rs.getBoolean("completed");
+                boolean reminded = rs.getBoolean("reminded");
+                Event eventTemp = new Event(event_id, patientid, event_name, event_description, event_location, event_start_time,
+                                                event_end_time, completed, reminded);
                 events.add(eventTemp);
             }
 
@@ -171,8 +209,9 @@ public class EventDAO {
                 DateTime event_start_time = new DateTime(rs.getTimestamp("event_start_time").getTime());
                 DateTime event_end_time = new DateTime(rs.getTimestamp("event_end_time").getTime());
                 boolean completed = rs.getBoolean("completed");
+                boolean reminded = rs.getBoolean("reminded");
                 event = new Event(event_id, patient_id, event_name, event_description, event_location, event_lat, event_lng, event_start_time,
-                                                event_end_time, completed);
+                                                event_end_time, completed, reminded);
             }
 
         } catch (SQLException e) {

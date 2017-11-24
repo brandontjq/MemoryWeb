@@ -23,6 +23,7 @@ public class Event {
     private DateTime event_start_time;
     private DateTime event_end_time;
     private boolean completed;
+    private boolean reminded;
     
     public Event(int event_id, int patient_id, String event_name, String event_description, String location, double event_lat, double event_lng,
             DateTime event_start_time, DateTime event_end_time){
@@ -38,7 +39,7 @@ public class Event {
         this.completed = false;
     }
     public Event(int event_id, int patient_id, String event_name, String event_description, String location,
-            DateTime event_start_time, DateTime event_end_time, boolean completed){
+            DateTime event_start_time, DateTime event_end_time, boolean completed, boolean reminded){
         
         this.event_id = event_id;
         this.patient_id = patient_id;
@@ -48,10 +49,11 @@ public class Event {
         this.event_start_time = event_start_time;
         this.event_end_time = event_end_time;
         this.completed = completed;
+        this.reminded = reminded;
     }
     
     public Event(int event_id, int patient_id, String event_name, String event_description, String location,double event_lat, double event_lng,
-            DateTime event_start_time, DateTime event_end_time, boolean completed){
+            DateTime event_start_time, DateTime event_end_time, boolean completed, boolean reminded){
         
         this.event_id = event_id;
         this.patient_id = patient_id;
@@ -63,8 +65,14 @@ public class Event {
         this.event_start_time = event_start_time;
         this.event_end_time = event_end_time;
         this.completed = completed;
+        this.reminded = reminded;
     }
-    
+    public boolean get_reminded(){
+        return reminded;
+    }
+    public void set_reminded(boolean reminded){
+        this.reminded = reminded;
+    }
     public double getEvent_lat(){
         return event_lat;
     }
