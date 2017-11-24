@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class ConnectionManager {
 
-  private static final String PROPS_FILENAME = "/memoryweb/connection.properties";
+  //private static final String PROPS_FILENAME = "/memoryweb/connection.properties";
   private static String dbUser = "root";
   private static String dbPassword = "";
   private static String dbURL = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "memoryweb"  + "?useUnicode=yes&characterEncoding=UTF-8";;
@@ -29,49 +29,49 @@ public class ConnectionManager {
     initDBDriver();
   }
 
-  private static boolean readOpenshiftDatabaseProperties() {
-    // grab environment variable
-    String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+//  private static boolean readOpenshiftDatabaseProperties() {
+//    // grab environment variable
+//    String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+//
+//    if (host == null) {
+//      return false;
+//    }
+//    // this is production environment
+//    // obtain database connection properties from environment variables
+//    String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+//    String dbName = System.getenv("OPENSHIFT_APP_NAME");
+//    dbUser = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+//    dbPassword = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+//
+//    dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useUnicode=yes&characterEncoding=UTF-8";
+//    return true;
+//  }
 
-    if (host == null) {
-      return false;
-    }
-    // this is production environment
-    // obtain database connection properties from environment variables
-    String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-    String dbName = System.getenv("OPENSHIFT_APP_NAME");
-    dbUser = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-    dbPassword = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-
-    dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useUnicode=yes&characterEncoding=UTF-8";
-    return true;
-  }
-
-  private static void readLocalDatabaseProperties() {
-    try {
-      // Retrieve properties from connection.properties via the CLASSPATH
-      // WEB-INF/classes is on the CLASSPATH
-      InputStream is = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-      Properties props = new Properties();
-      props.load(is);
-
-      // load database connection details
-      String host = props.getProperty("db.host");
-      String port = props.getProperty("db.port");
-      String dbName = props.getProperty("db.name");
-      //dbUser = props.getProperty("db.user");
-      //dbPassword = props.getProperty("db.password");
-      
-      //dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName  + "?useUnicode=yes&characterEncoding=UTF-8";
-      dbURL = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "memoryweb"  + "?useUnicode=yes&characterEncoding=UTF-8";
-    } catch (Exception ex) {
-      // unable to load properties file
-      String message = "Unable to load '" + PROPS_FILENAME + "'.";
-
-      Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-      throw new RuntimeException(message, ex);
-    }
-  }
+//  private static void readLocalDatabaseProperties() {
+//    try {
+//      // Retrieve properties from connection.properties via the CLASSPATH
+//      // WEB-INF/classes is on the CLASSPATH
+//      InputStream is = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
+//      Properties props = new Properties();
+//      props.load(is);
+//
+//      // load database connection details
+//      String host = props.getProperty("db.host");
+//      String port = props.getProperty("db.port");
+//      String dbName = props.getProperty("db.name");
+//      //dbUser = props.getProperty("db.user");
+//      //dbPassword = props.getProperty("db.password");
+//      
+//      //dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName  + "?useUnicode=yes&characterEncoding=UTF-8";
+//      dbURL = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "memoryweb"  + "?useUnicode=yes&characterEncoding=UTF-8";
+//    } catch (Exception ex) {
+//      // unable to load properties file
+//      String message = "Unable to load '" + PROPS_FILENAME + "'.";
+//
+//      Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
+//      throw new RuntimeException(message, ex);
+//    }
+//  }
 
   private static void initDBDriver() {
     try {
@@ -79,7 +79,6 @@ public class ConnectionManager {
     } catch (Exception ex) {
       // unable to load properties file
       String message = "Unable to find JDBC driver for MySQL.";
-
       Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
       throw new RuntimeException(message, ex);
     }
