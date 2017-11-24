@@ -31,6 +31,9 @@
     
     out.println(startdate + " " + enddate + " " + description + " " + location + "event id" + event_id);
     EventDAO eventDAO = new EventDAO();
+    //TODO: TEMP TO REMOVE
+    dao.ds.EventDAO tempEventDAO = new dao.ds.EventDAO();
+
     LocationDAO locationDAO = new LocationDAO();
     ArrayList<Double> latLng = locationDAO.getLocationLatLng(location.replaceAll("\\s","+"));
     if(event_id != 0){ //Modify Event
@@ -45,6 +48,7 @@
                       DateTimeFormat.forPattern("dd/MM/yyyy HH:mm")), DateTime.parse(enddate, 
                       DateTimeFormat.forPattern("dd/MM/yyyy HH:mm")));
         eventDAO.saveEvent(event);
+        tempEventDAO.saveEvent(event);
         locationDAO.saveLocation(patient_id, event_id_updated, latLng.get(0), latLng.get(1));
     }
     response.sendRedirect(""); 
